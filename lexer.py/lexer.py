@@ -11,6 +11,7 @@
 #   Check for Comments
 #   Print result
 #====================================================================
+
 # Tables
 identifier_table = {
     1: {'L': 2, 'D' : 6, '_': 6},

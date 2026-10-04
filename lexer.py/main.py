@@ -13,12 +13,18 @@
 
 # MAIN
 # Variables
+import os
 from lexer import lexer, SEPARATORS, SIMPLE_OPS, DOUBLE_OPS, keywords
 # Ask the user for an input file directory
 inFile = input("Enter Input File directory: ")
 try:    #Attempt to open input file
     file = open(inFile, "r")
-    outputFile = open("output.txt", "w")
+    # Name the output after the input file (a1inFile1.txt -> output_a1inFile1.txt)
+    # so each test case gets its own output file instead of overwriting output.txt
+    folder = os.path.dirname(inFile)
+    name = os.path.splitext(os.path.basename(inFile))[0]
+    outName = os.path.join(folder, "output_" + name + ".txt")
+    outputFile = open(outName, "w")
     inputContent = file.read()
     file.close()
 except FileNotFoundError:
@@ -172,5 +178,6 @@ if tokenVal != "":
     outputFile.write(f"{tokenPrev:<25}{tokenVal}\n")          # Print last token since it missed the loop's window to be printed
 
 outputFile.close()
+print("Results written to " + outName)
 #testcase 1, if it passes this properly then we are close to being done
 #This sTATEment is + false 000 #
