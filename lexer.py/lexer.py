@@ -27,7 +27,7 @@ digit_table = {
     4: {'D': 4, '.': 5},
     5: {'D': 5, '.': 5}
 }
-SEPARATORS = {'(', ')', '{', '}', ';', ',', '@'} 
+SEPARATORS = {'(', ')', '{', '}', ';', ',', '|'} 
 SIMPLE_OPS = {'=', '<', '>', '+', '-', '*', '/'}
 DOUBLE_OPS = {'==', '!=', '<=', '>='} #operators that use 2 characters are defined here
 keywords = {"integer", "boolean", 
