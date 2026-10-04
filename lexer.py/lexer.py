@@ -21,7 +21,7 @@ identifier_table = {
     6: {'L': 6, 'D' : 6, '_': 6}
 }
 digit_table = {
-    1: {'D': 2, '.': 5},
+    1: {'D': 2, '.': 3},
     2: {'D': 2, '.': 3},
     3: {'D': 4, '.': 5},
     4: {'D': 4, '.': 5},
@@ -30,11 +30,16 @@ digit_table = {
 SEPARATORS = {'(', ')', '{', '}', ';', ',', '@'} 
 SIMPLE_OPS = {'=', '<', '>', '+', '-', '*', '/'}
 DOUBLE_OPS = {'==', '!=', '<=', '>='} #operators that use 2 characters are defined here
+keywords = {"integer", "boolean", 
+            "real", "if", "else", 
+            "fi", "return", "put", 
+            "get", "while", "true", 
+            "false"}
 # States
 start_state = 1
 
 identifier_accepting_states = {2, 3, 4, 5}
-digit_accept_states = {4}
+digit_accept_states = {2,4}
 #dead_state = 6
 #accepting_states = {2, 3, 4, 5}
 
@@ -69,6 +74,11 @@ def identifier_dfa(lexeme):
         return True
     else:
         return False
+def keyword_check(identifier):
+    for key in keywords:
+        if key == identifier:
+            return True
+    return False
 def digit_type(char):
     if char.isdigit():
         return "D"
@@ -77,17 +87,20 @@ def digit_type(char):
     else:
         return "Unknown token"
 def digit_check(lexeme):
+    #print("Digit Check")
     current_state = start_state
-
     for char in lexeme:
         char_type = digit_type(char)
         if char_type == "Unknown token":
-                return False
+                return "Unknown"
         current_state = digit_table[current_state][char_type]
+        #print(str(current_state) + ", " + lexeme)
     if current_state in digit_accept_states:
-        return True
+        if current_state == 2:
+            return "Digit"
+        return "Real"
     else:
-         return False
+         return "Unknown"
 def match_op_or_sep(src, i):
     """Try to match an operator or separator at src[i].
     Returns (token_type, lexeme, new_index) or None if no match."""
@@ -105,29 +118,22 @@ def match_op_or_sep(src, i):
 #===================================================================
 # Lexer MAIN
 #===================================================================
-#apple)
-
-# (apple)
 def lexer(lexeme):
     # Check for identifyers
     if identifier_dfa(lexeme):
         #print(f"{'identifier':<25}{lexeme}")
-        return "identifier"
-    # Check for Keywords
-    # Check for Digits (currently broken)
-    if digit_check(lexeme):
-       print(f"{'Digit':<25}{lexeme}")
+        # if it is an identifier, then also check if it is a keyword
+        if keyword_check(lexeme):
+            return "keyword"
+        else:
+            return "identifier"
+    # Check for Digits and real numbers
+    digitToken = digit_check(lexeme)
+    if digitToken != "Unknown":
+       #print(f"{digitToken:<25}{lexeme}") 
+       return digitToken
     # Check for Operator/Separator (currently broken)
     #match_op_or_sep(lexeme,1)
-    # Check for Comments
-
-
+    # Check for Comments (Not made yet)
     return "Unknown"
     # End of File
-    #print(identifier_dfa("abc"))
-    #print(identifier_dfa("abc123"))
-    #print(identifier_dfa("abc_123"))
-    #print(identifier_dfa("123abc"))
-    #print(identifier_dfa("_abc"))
-    #print(identifier_dfa("abc$"))
-    #print(identifier_dfa("abc def"))
