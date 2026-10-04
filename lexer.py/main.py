@@ -179,5 +179,3 @@ if tokenVal != "":
 
 outputFile.close()
 print("Results written to " + outName)
-#testcase 1, if it passes this properly then we are close to being done
-#This sTATEment is + false 000 #
