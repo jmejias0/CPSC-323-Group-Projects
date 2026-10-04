@@ -50,21 +50,29 @@ if inputContent: #If data was found, then print template to prep for lexer
 
 tokenVal = ""   # The value of the token that is remembered through the loop, printed after done
 tokenPrev = ""  # the previous token type to be compared to the current token type
+tokenType = ""  # Current type of the token
 for char in inputContent:
-    if char != " ":
-        if tokenPrev == "":
-            tokenPrev = lexer(char)                         # Set the initial Token Value
-        else:
-            tokenType = lexer(tokenVal + char)              # Check what type of token returns from prev char + current char
-            if tokenType != tokenPrev:                      # Check if the new token isnt the same type as previous
-                if char != '.':                             # Check for special cases involving digits
-                    if tokenType != "Real":                 # Check for special cases involving real numbers
-                        if tokenVal[-1] == '.':             # Check if a . is at the end
-                             tokenVal = tokenVal[:-1]       # Remove dot so digit value is valid to print
-                        print(f"{tokenPrev:<25}{tokenVal}") # Print token and value
-                        tokenVal = ""                       # Empty value to make room for next
-                        tokenPrev = ""                      # Empty type since whats next could be anything
+    if tokenPrev == "":
+        tokenPrev = lexer(char)                         # Set the initial Token Value
+        tokenType = tokenPrev
+        #print("Initial token found! "+ tokenPrev)
+    else:
+        #print("Running Lexer for " + tokenVal + char)
+        tokenType = lexer(tokenVal + char)              # Check what type of token returns from prev char + current char
+        #print(f"{tokenType:<25}{tokenVal + char}")
+        if (tokenType != tokenPrev and tokenType != "keyword") or char == " ":                      # Check if the new token isnt the same type as previous
+            #if char != '.':     # Check for special cases involving digits
+            if char != '.' and tokenType != "Real":  
+                
+                #if tokenVal[-1] == '.':                 # Check if '.' is at the end
+                    #tokenVal = tokenVal[:-1]            # Remove dot so digit value is valid to print
+                print(f"{tokenPrev:<25}{tokenVal}")     # Print token and value
+                tokenVal = ""                           # Empty value to make room for next
+                tokenPrev = ""  
+    if char != " ":                    # Empty type since whats next could be anything
+        #print("Added " + char + ", token type: " + tokenType + ", previous type: " + tokenPrev)
         tokenVal += char
+        tokenPrev = tokenType
 tokenPrev = lexer(tokenVal)                                 # Check for type one more time
 print(f"{tokenPrev:<25}{tokenVal}")                         # File is done, print last token and its value and were done
 # End of Main()
