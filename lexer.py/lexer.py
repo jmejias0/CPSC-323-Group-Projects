@@ -27,7 +27,9 @@ digit_table = {
     4: {'D': 4, '.': 5},
     5: {'D': 5, '.': 5}
 }
-SEPARATORS = {'(', ')', '{', '}', ';', ',', '@'} 
+
+KEYWORDS = {'integer', 'else', 'while', 'boolean', 'real', 'if', 'fi', 'return', 'put', 'get', 'true', 'false'}
+SEPARATORS = {'(', ')', '{', '}', ';', ',', '|'} 
 SIMPLE_OPS = {'=', '<', '>', '+', '-', '*', '/'}
 DOUBLE_OPS = {'==', '!=', '<=', '>='} #operators that use 2 characters are defined here
 keywords = {"integer", "boolean", 
@@ -47,6 +49,7 @@ digit_accept_states = {2,4}
 #===================================================================
 # FUNCTIONS
 #===================================================================
+
 def character_type(char):
     if char.isalpha():
         return "L"
@@ -102,8 +105,8 @@ def digit_check(lexeme):
     else:
          return "Unknown"
 def match_op_or_sep(src, i):
-    """Try to match an operator or separator at src[i].
-    Returns (token_type, lexeme, new_index) or None if no match."""
+    #Try to match an operator or separator at src[i].
+    #Returns (token_type, lexeme, new_index) or None if no match."""
     two = src[i:i+2]
     ch = src[i]
 
@@ -119,21 +122,33 @@ def match_op_or_sep(src, i):
 # Lexer MAIN
 #===================================================================
 def lexer(lexeme):
-    # Check for identifyers
+     # Check for identifiers and keywords
     if identifier_dfa(lexeme):
-        #print(f"{'identifier':<25}{lexeme}")
-        # if it is an identifier, then also check if it is a keyword
-        if keyword_check(lexeme):
-            return "keyword"
+        if lexeme.lower() in KEYWORDS:
+            return ("keyword", lexeme)
         else:
-            return "identifier"
-    # Check for Digits and real numbers
-    digitToken = digit_check(lexeme)
-    if digitToken != "Unknown":
-       #print(f"{digitToken:<25}{lexeme}") 
-       return digitToken
+            return ("identifier", lexeme)
+
+     # Check for operators and separators
+    result = match_op_or_sep(lexeme, 0)
+
+    if result is not None:
+        token_type, token_lexeme, new_index = result
+        return (token_type, token_lexeme)
+    
+    # Check for identifyers
+    #if identifier_dfa(lexeme):
+    #    return ("identifier", lexeme)
+        #print(f"{'identifier':<25}{lexeme}")
+        return "identifier"
+    # Check for Keywords
+    # Check for Digits (currently broken)
+    if digit_check(lexeme):
+       print(f"{'Digit':<25}{lexeme}")
     # Check for Operator/Separator (currently broken)
     #match_op_or_sep(lexeme,1)
-    # Check for Comments (Not made yet)
+    # Check for Comments
+
+
     return "Unknown"
     # End of File
