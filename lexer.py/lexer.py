@@ -132,8 +132,14 @@ def lexer(lexeme):
     if digitToken != "Unknown":
        #print(f"{digitToken:<25}{lexeme}") 
        return digitToken
-    # Check for Operator/Separator (currently broken)
+    # Check for Operator/Separator (currently fixed!)
+    # match_op_or_sep: looks at the source text at position i and returns (token_type, lexeme, next_index) if an operator or separator starts there
+    # Uses "longest match first": tries 2-character operators before 1-character ones, Returns None if the character isn't an operator or separator
     #match_op_or_sep(lexeme,1)
+    if lexeme in DOUBLE_OPS or lexeme in SIMPLE_OPS:
+        return "operator"
+    if lexeme in SEPARATORS:
+        return "separator"
     # Check for Comments (Not made yet)
     return "Unknown"
     # End of File

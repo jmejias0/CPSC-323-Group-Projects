@@ -1,0 +1,16 @@
+ ! Fahrenheit to Celsius sample with a function !
+function convert (fahr integer)
+{
+    return 5 * (fahr - 32) / 9;
+}
+@
+integer low, high, step;
+real rate;
+@
+get (low, high, step);
+rate=.5;
+while (low <= high)
+{
+    put (convert (low));
+    low = low + step;
+}

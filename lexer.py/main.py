@@ -23,6 +23,7 @@ try:    #Attempt to open input file
     file.close()
 except FileNotFoundError:
     print("ERR, no valid input file at this directory.")
+    exit() # stop here, otherwise inputContent doesn't exist and the program crashes
 # Print Template
 if inputContent: #If data was found, then print template to prep for lexer
     outputFile.write("Output:\n")
@@ -47,7 +48,7 @@ if inputContent: #If data was found, then print template to prep for lexer
     # Print last token since it missed the loop's window to be printed
 
 
-
+WORD_TYPES = {"identifier", "keyword"} # Token types that are both made of letters/digits/_ . Switching between these two doesn't end a token (e.g. "if" -> "iffy" is one identifier
 tokenVal = ""   # The value of the token that is remembered through the loop, printed after done
 tokenPrev = ""  # the previous token type to be compared to the current token type
 tokenType = ""  # Current type of the token
@@ -57,7 +58,24 @@ i = 0
 
 while i < len(inputContent):
     char = inputContent[i]
-
+     # start/end comment
+    if char == '!':
+            # If we are entering a comment and there is a token waiting,
+            # print that token before ignoring the comment
+            if not inComment and tokenVal != "":
+                outputFile.write(f"{tokenPrev:<25}{tokenVal}\n")
+                tokenVal = ""
+                tokenPrev = ""
+                tokenType = ""
+    
+            inComment = not inComment
+            i += 1
+            continue
+    
+        #ignore characters in comment
+    if inComment:
+        i += 1
+        continue
     # Handle operators
     two_chars = inputContent[i:i+2]
     
@@ -73,24 +91,7 @@ while i < len(inputContent):
         i += 2
         continue
 
-    # start/end comment
-    if char == '!':
-        # If we are entering a comment and there is a token waiting,
-        # print that token before ignoring the comment
-        if not inComment and tokenVal != "":
-            outputFile.write(f"{tokenPrev:<25}{tokenVal}\n")
-            tokenVal = ""
-            tokenPrev = ""
-            tokenType = ""
-
-        inComment = not inComment
-        i += 1
-        continue
-
-    #ignore characters in comment
-    if inComment:
-        i += 1
-        continue
+   
 
      # Handle spaces, tabs, and newlines
     if char.isspace():
@@ -126,6 +127,19 @@ while i < len(inputContent):
         outputFile.write(f"{'operator':<25}{char}\n")
         i += 1
         continue
+    # A single invalid character (like [ or #) is printed on its own,
+    # so it doesn't swallow the letters/digits after it (e.g. "[ut" -> "[" and "ut")
+    # '.' and '_' are skipped here because they can be part of reals/identifiers
+    #####it happened in the first test case file!!!!# this should fix
+    if lexer(char) == "Unknown" and char not in "._":
+        if tokenVal != "":
+            outputFile.write(f"{tokenPrev:<25}{tokenVal}\n")
+        tokenVal = ""
+        tokenPrev = ""
+        tokenType = ""
+        outputFile.write(f"{'Unknown':<25}{char}\n")
+        i += 1
+        continue
 
     if tokenPrev == "":
         tokenPrev = lexer(char)                         # Set the initial Token Value
@@ -135,15 +149,19 @@ while i < len(inputContent):
         #print("Running Lexer for " + tokenVal + char)
         tokenType = lexer(tokenVal + char)              # Check what type of token returns from prev char + current char
         #print(f"{tokenType:<25}{tokenVal + char}")
-        if tokenType != tokenPrev and tokenType != "keyword":                      # Check if the new token isnt the same type as previous
-            #if char != '.':     # Check for special cases involving digits
-            if char != '.' and tokenType != "Real":  
-                
-                #if tokenVal[-1] == '.':                 # Check if '.' is at the end
-                    #tokenVal = tokenVal[:-1]            # Remove dot so digit value is valid to print
-                outputFile.write(f"{tokenPrev:<25}{tokenVal}\n")     # Print token and value
-                tokenVal = ""                           # Empty value to make room for next
-                tokenPrev = ""  
+# keyword -> identifier is still the same word (e.g. "fi" -> "first"), so don't split
+        sameWord = tokenType in WORD_TYPES and tokenPrev in WORD_TYPES # Check what type the token would be if we add the current character
+        # A keyword turning into an identifier is still the SAME word
+        # Example: "fi" is a keyword, but "fir" -> "first" is an identifier
+        # Without this check, "first" would be split into "fi" + "rst"
+        if tokenType != tokenPrev and not sameWord:
+            # Don't split on '.', because the number could still become a real
+            # (e.g. "23" -> "23." -> "23.00")
+            if char != '.' and tokenType != "Real":
+                outputFile.write(f"{tokenPrev:<25}{tokenVal}\n")
+                tokenVal = ""
+                tokenPrev = ""
+                tokenType = lexer(char)   # re-check the new char on its own
     if not char.isspace():                    # Empty type since whats next could be anything
         #print("Added " + char + ", token type: " + tokenType + ", previous type: " + tokenPrev)
         tokenVal += char

@@ -1,0 +1,38 @@
+
+function max (a integer, b integer)
+{
+    if (a > b)
+        return a;
+    else
+        return b;
+    fi
+}
+function isZero (n integer)
+{
+    if (n == 0) return true; fi
+    return false;
+}
+@
+integer i, count, biggest;
+real total, average;
+boolean done;
+@
+get (count);
+i = 0;
+total = 0.0;
+biggest = 0;
+done = false;
+while (i < count)
+{
+    total=total+1.25;
+    biggest = max(i, biggest);
+    if (i != 0) put (i); fi
+    if (i >= 10) done = true; fi
+    i = i - -1;
+}
+average = total / count * 2;
+if (average <= 100.75) put (average); else put (-1); fi
+first = iffy + getValue;
+x = 123. ;
+y = 9abc # 5;
+z = list[3];
