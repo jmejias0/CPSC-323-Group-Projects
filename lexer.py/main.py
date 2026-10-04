@@ -14,6 +14,24 @@
 # MAIN
 # Variables
 from lexer import lexer
+
+token, lexeme = lexer("fahr")
+
+print("Output:")
+print("-" * 7)
+print(f"{'Token':<25}{'lexeme'}")
+print("-" * 40)
+print(f"{token:<25}{lexeme}")
+
+print(lexer("fahr"))
+print(lexer("while"))
+print(lexer("integer"))
+print(lexer("abc123"))
+print(lexer("("))
+print(lexer("<="))
+print(lexer("+"))
+print(lexer(";"))
+
 # Ask the user for an input file directory
 inFile = input("Enter Input File directory: ")
 try:    #Attempt to open input file
@@ -53,9 +71,13 @@ tokenPrev = ""  # the previous token type to be compared to the current token ty
 for char in inputContent:
     if char != " ":
         if tokenPrev == "":
-            tokenPrev = lexer(char)                         # Set the initial Token Value
+            result = lexer(char)                         # Set the initial Token Value
+            if result is not None:
+                tokenPrev = result[0]                     # Set the initial Token Type
         else:
-            tokenType = lexer(tokenVal + char)              # Check what type of token returns from prev char + current char
+            result = lexer(tokenVal + char)              # Check what type of token returns from prev char + current char
+            if result is not None:
+                tokenType = result[0]
             if tokenType != tokenPrev:                      # Check if the new token isnt the same type as previous
                 if char != '.':                             # Check for special cases involving digits
                     if tokenType != "Real":                 # Check for special cases involving real numbers
