@@ -27,6 +27,8 @@ digit_table = {
     4: {'D': 4, '.': 5},
     5: {'D': 5, '.': 5}
 }
+
+KEYWORDS = {'integer', 'else', 'while', 'boolean', 'real', 'if', 'fi', 'return', 'put', 'get', 'true', 'false'}
 SEPARATORS = {'(', ')', '{', '}', ';', ',', '|'} 
 SIMPLE_OPS = {'=', '<', '>', '+', '-', '*', '/'}
 DOUBLE_OPS = {'==', '!=', '<=', '>='} #operators that use 2 characters are defined here
@@ -42,6 +44,7 @@ digit_accept_states = {4}
 #===================================================================
 # FUNCTIONS
 #===================================================================
+
 def character_type(char):
     if char.isalpha():
         return "L"
@@ -109,9 +112,23 @@ def match_op_or_sep(src, i):
 
 # (apple)
 def lexer(lexeme):
-    # Check for identifyers
+     # Check for identifiers and keywords
     if identifier_dfa(lexeme):
-        return ("identifier", lexeme)
+        if lexeme.lower() in KEYWORDS:
+            return ("keyword", lexeme)
+        else:
+            return ("identifier", lexeme)
+
+     # Check for operators and separators
+    result = match_op_or_sep(lexeme, 0)
+
+    if result is not None:
+        token_type, token_lexeme, new_index = result
+        return (token_type, token_lexeme)
+    
+    # Check for identifyers
+    #if identifier_dfa(lexeme):
+    #    return ("identifier", lexeme)
         #print(f"{'identifier':<25}{lexeme}")
     # Check for Keywords
     # Check for Digits
