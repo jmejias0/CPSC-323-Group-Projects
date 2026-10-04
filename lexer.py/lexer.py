@@ -27,7 +27,7 @@ digit_table = {
     4: {'D': 4, '.': 5},
     5: {'D': 5, '.': 5}
 }
-SEPARATORS = {'(', ')', '{', '}', ';', ',', '@'} 
+SEPARATORS = {'(', ')', '{', '}', ';', ',', '|'} 
 SIMPLE_OPS = {'=', '<', '>', '+', '-', '*', '/'}
 DOUBLE_OPS = {'==', '!=', '<=', '>='} #operators that use 2 characters are defined here
 # States
@@ -89,8 +89,8 @@ def digit_check(lexeme):
     else:
          return False
 def match_op_or_sep(src, i):
-    """Try to match an operator or separator at src[i].
-    Returns (token_type, lexeme, new_index) or None if no match."""
+    #Try to match an operator or separator at src[i].
+    #Returns (token_type, lexeme, new_index) or None if no match."""
     two = src[i:i+2]
     ch = src[i]
 
@@ -111,18 +111,18 @@ def match_op_or_sep(src, i):
 def lexer(lexeme):
     # Check for identifyers
     if identifier_dfa(lexeme):
+        return ("identifier", lexeme)
         #print(f"{'identifier':<25}{lexeme}")
-        return "identifier"
     # Check for Keywords
-    # Check for Digits (currently broken)
+    # Check for Digits
     if digit_check(lexeme):
        print(f"{'Digit':<25}{lexeme}")
-    # Check for Operator/Separator (currently broken)
-    #match_op_or_sep(lexeme,1)
+    # Check for Operator/Separator
+    match_op_or_sep(lexeme,1)
     # Check for Comments
 
 
-    return "Unknown"
+
     # End of File
     #print(identifier_dfa("abc"))
     #print(identifier_dfa("abc123"))
