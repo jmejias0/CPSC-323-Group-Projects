@@ -111,17 +111,18 @@ def match_op_or_sep(src, i):
 def lexer(lexeme):
     # Check for identifyers
     if identifier_dfa(lexeme):
-        print(f"{'identifier':<25}{lexeme}")
+        #print(f"{'identifier':<25}{lexeme}")
+        return "identifier"
     # Check for Keywords
-    # Check for Digits
+    # Check for Digits (currently broken)
     if digit_check(lexeme):
        print(f"{'Digit':<25}{lexeme}")
-    # Check for Operator/Separator
-    match_op_or_sep(lexeme,1)
+    # Check for Operator/Separator (currently broken)
+    #match_op_or_sep(lexeme,1)
     # Check for Comments
 
 
-
+    return "Unknown"
     # End of File
     #print(identifier_dfa("abc"))
     #print(identifier_dfa("abc123"))
