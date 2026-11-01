@@ -64,4 +64,4 @@ The following rules were introduced after applying left factorization and removi
 - Implement the required grammar rules as parser functions.
 - Apply left recursion elimination and left factorization where needed.
 - Test parser functions using valid and invalid RAT26F inputs.
-- Use Git commits to document changes and track project progress.
+- Spliting rules between all the group members
