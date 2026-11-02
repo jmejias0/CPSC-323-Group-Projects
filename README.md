@@ -49,7 +49,7 @@ The following rules were introduced after applying left factorization and removi
 - **R31:** `<Function Definitions Prime> ::= <Function Definitions> | ε`
 - **R32:** `<Parameter List Prime> ::= <Parameter List> | ε`
 - **R33:** `<Declaration List Prime> ::= <Declaration List> | ε`
-- **R34:** `<ID's Prime> ::= <IDs> | ε`
+- **R34:** `<IDs Prime> ::= <IDs> | ε`
 - **R35:** `<Statement List Prime> ::= <Statement List> | ε`
 - **R36:** `<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | ε`
 - **R37:** `<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | ε`
