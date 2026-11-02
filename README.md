@@ -13,32 +13,32 @@ Rules marked with ⭐ require modifications to remove left recursion or perform 
 
 - **R1:** `<Rat26F> ::= <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List>`
 - **R2:** `<Opt Function Definitions> ::= <Function Definitions> | <Empty>`
-- **R3:** ⭐ `<Function Definitions> ::= <Function> | <Function> <Function Definitions>`
+- **R3:** `<Function Definitions> ::= <Function> <Function Definitions Prime>`
 - **R4:** `<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>`
 - **R5:** `<Opt Parameter List> ::= <Parameter List> | <Empty>`
-- **R6:** ⭐ `<Parameter List> ::= <Parameter> | <Parameter> , <Parameter List>`
+- **R6:** `<Parameter List> ::= <Parameter> <Parameter List Prime>`
 - **R7:** `<Parameter> ::= <IDs> <Qualifier>`
 - **R8:** `<Qualifier> ::= integer | boolean | real`
 - **R9:** `<Body> ::= { <Statement List> }`
 - **R10:** `<Opt Declaration List> ::= <Declaration List> | <Empty>`
-- **R11:** ⭐ `<Declaration List> ::= <Declaration> ; | <Declaration> ; <Declaration List>`
+- **R11:** `<Declaration List> ::= <Declaration> <Declaration List Prime>`
 - **R12:** `<Declaration> ::= <Qualifier> <IDs>`
-- **R13:** ⭐ `<IDs> ::= <Identifier> | <Identifier> , <IDs>`
-- **R14:** ⭐ `<Statement List> ::= <Statement> | <Statement> <Statement List>`
+- **R13:** `<IDs> ::= <Identifier> <IDs Prime>`
+- **R14:** `<Statement List> ::= <Statement> <Statement List Prime>`
 - **R15:** `<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>`
 - **R16:** `<Compound> ::= { <Statement List> }`
 - **R17:** `<Assign> ::= <Identifier> = <Expression> ;`
-- **R18:** ⭐ `<If> ::= if ( <Condition> ) <Statement> fi | if ( <Condition> ) <Statement> else <Statement> fi`
-- **R19:** ⭐ `<Return> ::= return ; | return <Expression> ;`
+- **R18:** `<If> ::= if ( <Condition> ) <Statement> <If prime>`
+- **R19:** `<Return> ::= return <Return Prime>`
 - **R20:** `<Print> ::= put ( <Expression> );`
 - **R21:** `<Scan> ::= get ( <IDs> );`
 - **R22:** `<While> ::= while ( <Condition> ) <Statement>`
 - **R23:** `<Condition> ::= <Expression> <Relop> <Expression>`
 - **R24:** `<Relop> ::= == | != | > | < | <= | >=`
-- **R25:** ⭐ `<Expression> ::= <Expression> + <Term> | <Expression> - <Term> | <Term>`
-- **R26:** ⭐ `<Term> ::= <Term> * <Factor> | <Term> / <Factor> | <Factor>`
+- **R25:** `<Expression> ::= <Term> <Expression Prime>`
+- **R26:** `<Term> ::= <Factor> <Term Prime>`
 - **R27:** `<Factor> ::= - <Primary> | <Primary>`
-- **R28:** ⭐ `<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false`
+- **R28:** `<Primary> ::= <Identifier> <Primary Prime> | <Integer> | ( <Expression> ) | <Real> | true | false`
 
 ---
 
@@ -61,7 +61,6 @@ The following rules were introduced after applying left factorization and removi
 
 ## Development Notes
 
-- Implement the required grammar rules as parser functions.
-- Apply left recursion elimination and left factorization where needed.
-- Test parser functions using valid and invalid RAT26F inputs.
-- Spliting rules between all the group members
+- After eliminating left recursion elimination and left factorization where needed
+ there is a total of 38 functions
+
