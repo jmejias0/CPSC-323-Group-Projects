@@ -37,6 +37,7 @@ The following grammar rules (R1–R28) define the syntax of the RAT26F programmi
 - **R26:** `<Term> ::= <Factor> <Term Prime>`
 - **R27:** `<Factor> ::= - <Primary> | <Primary>`
 - **R28:** `<Primary> ::= <Identifier> <Primary Prime> | <Integer> | ( <Expression> ) | <Real> | true | false`
+- **R29:** `<Empty> ::= ε`
 
 ---
 
@@ -44,16 +45,16 @@ The following grammar rules (R1–R28) define the syntax of the RAT26F programmi
 
 The following rules were introduced after applying left factorization and removing left recursion where necessary.
 
-- **R29:** `<Primary Prime> ::= ( <IDs> ) | ε`
-- **R30:** `<Function Definitions Prime> ::= <Function Definitions> | ε`
-- **R31:** `<Parameter List Prime> ::= <Parameter List> | ε`
-- **R32:** `<Declaration List Prime> ::= <Declaration List> | ε`
-- **R33:** `<ID's Prime> ::= <IDs> | ε`
-- **R34:** `<Statement List Prime> ::= <Statement List> | ε`
-- **R35:** `<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | ε`
-- **R36:** `<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | ε`
-- **R37:** `<Return Prime> ::= ; | <Expression>`
-- **R38:** `<If Prime> ::= fi | else <Statement> fi`
+- **R30:** `<Primary Prime> ::= ( <IDs> ) | ε`
+- **R31:** `<Function Definitions Prime> ::= <Function Definitions> | ε`
+- **R32:** `<Parameter List Prime> ::= <Parameter List> | ε`
+- **R33:** `<Declaration List Prime> ::= <Declaration List> | ε`
+- **R34:** `<ID's Prime> ::= <IDs> | ε`
+- **R35:** `<Statement List Prime> ::= <Statement List> | ε`
+- **R36:** `<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | ε`
+- **R37:** `<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | ε`
+- **R38:** `<Return Prime> ::= ; | <Expression>`
+- **R39:** `<If Prime> ::= fi | else <Statement> fi`
 
 ---
 
