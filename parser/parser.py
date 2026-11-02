@@ -3,7 +3,9 @@
 # RAT26F REcursive Descent Parser
 # ====================================================
 
-class Parser:
+from .functions import FunctionRules
+
+class Parser(FunctionRules):
 
     def __init__(self, tokens):
         # List of tokens received from the lexer
@@ -44,10 +46,26 @@ class Parser:
                 f"Expected {expected}, but found {lexeme}"
             )
 
-     # First RAT26F rule <Rat26F>
-        def parse_rat26f(self):
+    # First Rule #R1 of RAT26F is <Rat26F>
+    def parse_rat26f(self):
             self.opt_function_definitions() #R2
             self.match("@") 
             self.opt_declaration_list()     #R10
             self.match("@")
             self.statement_list()           #R14
+
+    #Second Rule #R2 of RAT26F is <Opt Function Definitions>
+    def opt_function_definitions(self):
+        token = self.current_token()
+
+        if token is not None and token[1] == "function":
+            self.function_definitions() #R3
+        else:
+            self.empty() #R29
+
+    # Twenty-Ninth Rule #R29 of RAT26F is <Empty>
+    def empty(self):
+        # This rule does nothing, as it represents an empty production
+        pass
+
+    
