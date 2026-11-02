@@ -43,3 +43,11 @@ class Parser:
             raise SyntaxError(
                 f"Expected {expected}, but found {lexeme}"
             )
+
+     # First RAT26F rule <Rat26F>
+        def parse_rat26f(self):
+            self.opt_function_definitions() #R2
+            self.match("@") 
+            self.opt_declaration_list()     #R10
+            self.match("@")
+            self.statement_list()           #R14
