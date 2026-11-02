@@ -65,6 +65,18 @@ i = 0
 while i < len(inputContent):
     char = inputContent[i]
      # start/end comment
+     # Check for != operator first
+    if not inComment and inputContent[i:i+2] == "!=":
+        if tokenVal != "":
+            outputFile.write(f"{tokenPrev:<25}{tokenVal}\n")
+            tokenVal = ""
+            tokenPrev = ""
+            tokenType = ""
+
+        outputFile.write(f"{'operator':<25}{'!='}\n")
+        i += 2
+        continue
+    
     if char == '!':
             # If we are entering a comment and there is a token waiting,
             # print that token before ignoring the comment
