@@ -53,7 +53,7 @@ The following rules were introduced after applying left factorization and removi
 - **R35:** `<Statement List Prime> ::= <Statement List> | ε`
 - **R36:** `<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | ε`
 - **R37:** `<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | ε`
-- **R38:** `<Return Prime> ::= ; | <Expression>`
+- **R38:** `<Return Prime> ::= ; | <Expression> ;`
 - **R39:** `<If Prime> ::= fi | else <Statement> fi`
 
 ---
