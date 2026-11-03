@@ -19,7 +19,7 @@ The following grammar rules (R1–R28) define the syntax of the RAT26F programmi
 - **R8:** `<Qualifier> ::= integer | boolean | real`
 - **R9:** `<Body> ::= { <Statement List> }`
 - **R10:** `<Opt Declaration List> ::= <Declaration List> | <Empty>`
-- **R11:** `<Declaration List> ::= <Declaration> <Declaration List Prime>`
+- **R11:** `<Declaration List> ::= <Declaration> ; <Declaration List Prime>`
 - **R12:** `<Declaration> ::= <Qualifier> <IDs>`
 - **R13:** `<IDs> ::= <Identifier> <IDs Prime>`
 - **R14:** `<Statement List> ::= <Statement> <Statement List Prime>`
