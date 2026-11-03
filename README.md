@@ -5,7 +5,7 @@ This repository contains our CPSC-323 Compiler assignments, source code, and doc
 
 ## RAT26F Grammar Rules
 
-The following grammar rules (R1–R28) define the syntax of the RAT26F programming language.
+The following grammar rules (R1–R29) define the syntax of the RAT26F programming language.
 
 ### Original Grammar (R1–R29)
 
@@ -61,5 +61,5 @@ The following rules were introduced after applying left factorization and removi
 ## Development Notes
 
 - After eliminating left recursion elimination and left factorization where needed
- there is a total of 38 functions
+ there is a total of 39 functions
 
