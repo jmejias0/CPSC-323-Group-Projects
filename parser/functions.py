@@ -13,7 +13,7 @@ class FunctionRules:
         self.match("function")             
         self.match("identifier")           
         self.match("(")                    
-        self.parameter_list()    #R5          
+        self.opt_parameter_list()    #R5          
         self.match(")")                    
         self.opt_declaration_list() #R10       
         self.body()       #R9
