@@ -7,7 +7,7 @@ This repository contains our CPSC-323 Compiler assignments, source code, and doc
 
 The following grammar rules (R1–R28) define the syntax of the RAT26F programming language.
 
-### Original Grammar (R1–R28)
+### Original Grammar (R1–R29)
 
 - **R1:** `<Rat26F> ::= <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List>`
 - **R2:** `<Opt Function Definitions> ::= <Function Definitions> | <Empty>`
@@ -41,7 +41,7 @@ The following grammar rules (R1–R28) define the syntax of the RAT26F programmi
 
 ---
 
-## Additional Grammar Rules (R29–R38)
+## Additional Grammar Rules (R30–R39)
 
 The following rules were introduced after applying left factorization and removing left recursion where necessary.
 
