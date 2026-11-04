@@ -3,6 +3,44 @@
 
 This repository contains our CPSC-323 Compiler assignments, source code, and documentation. We use GitHub to collaborate, manage updates, and maintain a history of changes throughout the project.
 
+## Project Structure
+
+The project is organized into separate Python modules to improve code readability, maintainability, and collaboration among team members. Each module is responsible for a specific component of the RAT26F compiler.
+
+### Directory Structure
+
+```text
+CPSC-323-Group-Projects/
+│
+├── lexer.py
+│
+└── parser/
+    ├── __init__.py
+    ├── parser.py
+    ├── functions.py
+    ├── definitions.py
+    ├── statement.py
+    └── expressions.py
+```
+
+### File Descriptions
+
+| File | Description |
+|---|---|
+| `lexer.py` | Performs lexical analysis by converting source code into tokens and lexemes (Assignment 1). |
+| `parser.py` | Manages the Recursive Descent Parser, token navigation, `match()`, `advance()`, and the parsing process. |
+| `functions.py` | Implements grammar rules related to function definitions, parameters, and function bodies. |
+| `definitions.py` | Implements grammar rules for variable declarations, identifiers, and data type qualifiers. |
+| `statement.py` | Implements statements such as `if`, `while`, `return`, `put`, `get`, and assignments. |
+| `expressions.py` | Implements arithmetic expressions, terms, factors, primary expressions, and operators. |
+| `__init__.py` | Defines the parser directory as a Python package and supports module imports. |
+
+### Modular Parser Design
+
+The syntax analyzer uses a **Recursive Descent Parser (RDP)**. Grammar rules are organized into separate Python classes and integrated through the main `Parser` class.
+
+This modular approach allows team members to work on different grammar rules independently while sharing the same token stream and parser utilities.
+
 ## RAT26F Grammar Rules
 
 The following grammar rules (R1–R29) define the syntax of the RAT26F programming language.
