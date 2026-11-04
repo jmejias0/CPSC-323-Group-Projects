@@ -83,21 +83,51 @@ class FunctionRules:
         self.match("identifier")  # identifier
         self.ids_prime()          # R34
 
-    #Jonnathan's Incomplete Section
-        #R13 of Rat26 is <ids>
-    def ids(self):
-        token = self.current_token()
+    #-------------------------------------Jonnathan Section 14-26
     #R14 of Rat26 is <statement_list>
     def statement_list(self):
+        self.statement()
+        self.statement_list_prime()
+
     #R15 of Rat26 is <statement>
     def statement(self):
-    #R16 of Rat26 is <compound>
+        token = self.current_token()
+
+        if token is not None and token[1] == "{":
+            self.compound()         #R16: Compound
+        elif token is not None and token[0] == "identifier":
+            self.assign()           #R17: Assign
+        elif token is not None and token[1] == "if":
+            self.if_statement()     #R18
+        elif token is not None and token[1] == "return":
+            self.return_statement() #R19
+        elif token is not None and token[1] == "print":
+            self.print_statement()  #R20
+        elif token is not None and token[1] == "get":
+            self.scan_statement()   #R21
+        elif token is not None and token[1] == "while":
+            self.while_statement()  #R22
+        else:
+            raise SyntaxError("Expected statement, but found {token}")
+        
+    # R16: <Compound> ::= { <Statement List> }
     def compound(self):
-    #R17 of Rat26 is <assign>
+        self.match("{") 
+        self.statement_list()   #R14
+        self.match("}")
+    
+    #R17: <Assign> ::= <Identifier> = <Expression> ;
     def assign(self):
+        self.match("identifier")
+        self.match("=")
+        self.expression()   #R25
+        self.match(";")
+    
     #R18 of Rat26 is <If>
+    #R18: <If> ::= if ( <Condition> ) <Statement> <If prime>
     def If(self):
-    #End of Jonnathan's incomplete section
+        #R21: <Scan> ::= get ( <IDs> );
+    #--------------------------------------End of Jonnathan's section
 
 
     
