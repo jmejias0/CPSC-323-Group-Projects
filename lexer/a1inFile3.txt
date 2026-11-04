@@ -1,0 +1,6 @@
+FitneSS cl3ar [ut 90.1 !This is a comment, do not read this lol!
+This is an integer 15 ; (this is a variable)
+integer x = 15; 10 != 11 and 10 >= 10 fi 
+    real number1 = .9595
+    real number2 = 10.0
+    real number3 = 9999.
