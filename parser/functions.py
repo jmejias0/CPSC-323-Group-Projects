@@ -44,27 +44,13 @@ class FunctionRules:
         self.ids()        # R13
         self.qualifier()  # R8
 
-    # Eighth Rule #R8 of RAT26F is <Qualifier>
-    def qualifier(self):
-        token = self.current_token()
-
-        if token is not None and token[1] == "integer":
-            self.match("integer")  # R11
-
-        elif token is not None and token[1] == "boolean":
-            self.match("boolean")  # R12
-
-        elif token is not None and token[1] == "real":
-            self.match("real")  # R33
-
-        else:
-            raise SyntaxError("Expected integer, boolean, or real")
-
     # Ninth Rule #R9 of RAT26F is <Body>
     def body(self):
         self.match("{")          # Opening brace
         self.statement_list()    # R14
         self.match("}")          # Closing brace
+
+#*******************************************************************************
 
     # Tenth Rule #R10 of RAT26F is <Opt Declaration List>
     def opt_declaration_list(self):
@@ -75,39 +61,43 @@ class FunctionRules:
 
         else:
             self.empty()  # R29
-            
-    #R11 of Rat26 is <declaration_list>
+
+    # Eleventh Rule #R11 of RAT26F is <Declaration List>
     def declaration_list(self):
-        self.declaration()
-        self.declaraction_list_prime()
-    #2nd part of R11
-    def declaraction_list_prime(self):
-        token = self.current_token()
-        if token in ["int", "float", "char"]:
-            declaration_list()
-        else:
-            return
+        self.declaration()             # R12
+        self.match(";")                # Semicolon
+        self.declaration_list_prime()  # R33
+
+    # Twelfth Rule #R12 of RAT26F is <Declaration>
+    def declaration(self):
+        self.qualifier()  # R8
+        self.ids()        # R13
        
     #R12 of Rat26 is <declaration>
     def declaration(self):
         self.qualifier()
         self.ids()
 
-#Jonnathan's Incomplete Section
-    #R13 of Rat26 is <ids>
+    # Thirteenth Rule #R13 of RAT26F is <Ids>
+    def ids(self):
+        self.match("identifier")  # identifier
+        self.ids_prime()          # R34
+
+    #Jonnathan's Incomplete Section
+        #R13 of Rat26 is <ids>
     def ids(self):
         token = self.current_token()
-#R14 of Rat26 is <statement_list>
-def statement_list(self):
-#R15 of Rat26 is <statement>
-def statement(self):
-#R16 of Rat26 is <compound>
-def compound(self):
-#R17 of Rat26 is <assign>
-def assign(self):
-#R18 of Rat26 is <If>
-def If(self):
-#End of Jonnathan's incomplete section
+    #R14 of Rat26 is <statement_list>
+    def statement_list(self):
+    #R15 of Rat26 is <statement>
+    def statement(self):
+    #R16 of Rat26 is <compound>
+    def compound(self):
+    #R17 of Rat26 is <assign>
+    def assign(self):
+    #R18 of Rat26 is <If>
+    def If(self):
+    #End of Jonnathan's incomplete section
 
 
     
