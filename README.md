@@ -12,7 +12,10 @@ The project is organized into separate Python modules to improve code readabilit
 ```text
 CPSC-323-Group-Projects/
 │
-├── lexer.py
+├── lexer/
+│   ├── lexer.py
+│   ├── main.py
+│   └── real.py
 │
 └── parser/
     ├── __init__.py
