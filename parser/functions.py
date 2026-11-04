@@ -75,7 +75,42 @@ class FunctionRules:
 
         else:
             self.empty()  # R29
+            
+    #R11 of Rat26 is <declaration_list>
+    def declaration_list(self):
+        self.declaration()
+        self.declaraction_list_prime()
+    #2nd part of R11
+    def declaraction_list_prime(self):
+        token = self.current_token()
+        if token in ["int", "float", "char"]:
+            declaration_list()
+        else:
+            return
+       
+    #R12 of Rat26 is <declaration>
+    def declaration(self):
+        self.qualifier()
+        self.ids()
 
+#Jonnathan's Incomplete Section
+    #R13 of Rat26 is <ids>
+    def ids(self):
+        token = self.current_token()
+#R14 of Rat26 is <statement_list>
+def statement_list(self):
+#R15 of Rat26 is <statement>
+def statement(self):
+#R16 of Rat26 is <compound>
+def compound(self):
+#R17 of Rat26 is <assign>
+def assign(self):
+#R18 of Rat26 is <If>
+def If(self):
+#End of Jonnathan's incomplete section
+
+
+    
     # Thirty-first Rule #R31 of RAT26F is <Function Definitions Prime>
     def function_definitions_prime(self):
         token = self.current_token()
