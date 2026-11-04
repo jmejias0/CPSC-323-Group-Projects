@@ -123,10 +123,76 @@ class FunctionRules:
         self.expression()   #R25
         self.match(";")
     
-    #R18 of Rat26 is <If>
     #R18: <If> ::= if ( <Condition> ) <Statement> <If prime>
-    def If(self):
-        #R21: <Scan> ::= get ( <IDs> );
+    def if_statement(self):
+        self.match("if")
+        self.match("(")
+        self.condition()    #R23
+        self.match(")")
+        self.statement()    #R15
+        self.if_prime()     #R39
+
+    #R19: <Return> ::= return <Return Prime>
+    def return_statement(self):
+        self.match("return")
+        self.return_prime()     #R38
+
+    #R20: <Print> ::= put ( <Expression> );
+    def print_statement(self):
+        self.match("put")
+        self.expression()       #R25
+        self.match(";")
+
+    #R21: <Scan> ::= get ( <IDs> );
+    def scan_statement(self):
+        self.match("get")
+        self.match("(")
+        self.ids()          #R13
+        self.match(")")
+        self.match(";")
+
+    #R22: <While> ::= while ( <Condition> ) <Statement>
+    def while_statement(self):
+        self.match("while")
+        self.match("(")
+        self.condition()    #R23
+        self.match(")")
+        self.statement()    #R15
+
+    #R23: <Condition> ::= <Expression> <Relop> <Expression>
+    def condition(self):
+        self.expression()   #R25
+        self.relop()        #R24
+        self.expression()   #R25
+
+    #R24: <Relop> ::= == | != | > | < | <= | >=
+    def relop(self):
+        token = self.current_token()
+        
+        if token is not None and token[1] == "=":
+            self.match ("==")
+        elif token is not None and token[1] == "!":
+            self.match ("!=")
+        elif token is not None and token[1] == ">":
+            self.match (">")
+        elif token is not None and token[1] == "<":
+            self.match ("<")
+        elif token is not None and token[1] == "<=":
+            self.match ("<=")
+        elif token is not None and token[1] == "<=":
+            self.match (">=")
+        else:
+            raise SyntaxError("Expected relop, but found {token}")
+        
+    #R25: <Expression> ::= <Term> <Expression Prime>
+    def expression(self):
+        self.term()     #R26
+        self.expression_prime() #R37
+
+    #R26: <Term> ::= <Factor> <Term Prime> 
+    def term(self):
+        self.factor()       #R27
+        self.term_prime()   #R36
     #--------------------------------------End of Jonnathan's section
 
 
