@@ -1,0 +1,31 @@
+New rules added to the FunctionRules class in functions.py:
+- R27 factor(): <Factor> -> - <Primary> | <Primary>
+- R28 primary(): <Primary> -> <Identifier> <Primary Prime> | <Integer> | <Real> | ( <Expression> ) | true | false
+- R30 primary_prime(): <Primary Prime> -> ( <IDs> ) | <Empty>
+- R32 parameter_list_prime(): <Parameter List Prime> -> , <Parameter List> | <Empty>
+- R33 declaration_list_prime(): <Declaration List Prime> -> <Declaration List> | <Empty>
+- R34 ids_prime(): <IDs Prime> -> , <IDs> | <Empty>
+- R35 statement_list_prime(): <Statement List Prime> -> <Statement List> | <Empty>
+- R36 term_prime(): <Term Prime> -> * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+- R37 expression_prime(): <Expression Prime> -> + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+- R38 return_prime(): <Return Prime> -> ; | <Expression> ;
+- R39 if_prime(): <If Prime> -> fi | else <Statement> fi
+- R36 and R37 remove the left recursion from <Term> and <Expression>. The other Prime rules left-factor rules whose options start the same way.
+ 
+New helper methods:
+- _lexeme() and _type() return the current token's lexeme and token type.
+- print_rule() prints each production rule as it is used. Set show_rules = False to turn printing off.
+- Unexpected tokens raise a SyntaxError that shows the expected token and the token found.
+ 
+Bug fixes in existing code:
+- statement(): changed the check from "print" to "put".
+- print_statement(): added the missing match("(") and match(")").
+- relop(): now recognizes ==, !=, >, <, <= and >= as full lexemes (before, ==, != and >= failed).
+- Added the missing f-string prefix to two error messages so they show the actual token.
+- Removed the duplicate declaration() method.
+- Removed the unused "import token".
+ 
+Testing:
+- The full parser runs on the sample Rat26F program from the project document.
+- It also runs on a second program with if/else, real numbers, unary minus and all relational operators.
+- Both programs parse completely with no errors.
