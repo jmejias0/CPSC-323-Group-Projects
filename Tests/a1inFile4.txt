@@ -1,0 +1,6 @@
+@
+    integer a, b, c;
+@
+    get (a, b);
+    c = a + b * 2;
+    put (c);
